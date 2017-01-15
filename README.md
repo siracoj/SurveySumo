@@ -59,6 +59,8 @@ Change Directory to survey_sumo `cd SurveySumo/survey_sumo`
 
 Run the django migration `python manage.py migrate`
 
+Create your admin user `python manage.py createsuperuser --username=your_user_name --email=your_email@example.com`
+
 Run the server `python manage.py runserver`
 
 Now you should be able to access the site @ http://localhost:8000/
