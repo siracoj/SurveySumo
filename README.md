@@ -53,11 +53,13 @@ Install requirements `sudo pip install -r SurveySumo/requirements.txt`
 
 Log in to mysql `mysql -u root`
 
-Create the survey db `create database survey_sumo`
+Create the survey db `create database survey_sumo;`
 
 Change Directory to survey_sumo `cd SurveySumo/survey_sumo`
 
 Run the django migration `python manage.py migrate`
+
+Create your admin user `python manage.py createsuperuser --username=your_user_name --email=your_email@example.com`
 
 Run the server `python manage.py runserver`
 
