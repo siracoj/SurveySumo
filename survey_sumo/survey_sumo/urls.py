@@ -22,8 +22,11 @@ from survey import views
 urlpatterns = [
     url(r"^$", views.main, name="main"),
     url(r"^admin/", admin.site.urls, name="admin"),
-    url(r"^login/", views.login, name="login"),
+    url(r"^login/", views.login_user, name="login"),
     url(r"^question/", views.question, name="question"),
     url(r"^register/", views.register, name="register"),
+    url(r"^question/add/", views.add_question, name="question_add"),
+    url(r"^question/admin/", views.question_admin, name="question_admin"),
+    url(r"^answers/", views.answers, name="answers"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

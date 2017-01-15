@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, redirect, render
-from django.template import RequestContext
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from survey import models, forms
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout, login
 
 
 def main(request):
@@ -18,7 +19,7 @@ def main(request):
         return redirect("login")
 
 
-def login(request):
+def login_user(request):
     """
     Handles loading the login page and authenticating the user
 
@@ -27,6 +28,12 @@ def login(request):
     """
 
     if request.method == "GET":
+
+        # Log out user if one is logged in already
+        if request.user.is_authenticated:
+            print "logging in"
+            logout(request)
+
         # Load login page
         return render(request, "login.html", {"user_form": forms.UserForm()})
 
@@ -39,6 +46,7 @@ def login(request):
         )
 
         if user is not None:
+            login(request, user)
             return redirect("question")
         else:
             return render(request, "login.html", {
@@ -83,7 +91,44 @@ def register(request):
             return render(request, "register.html", {"errors": user_form.errors})
 
 
+@login_required(login_url='login')
 def question(request):
+    """
+    View to query for a new question the user has not answered yet
+
+    :param request:
+    :return:
+    """
+
+    return render(request, "question.html")
+
+
+@staff_member_required()
+def add_question(request):
+    """
+    View for admins to add questions
+
+    :param request:
+    :return:
+    """
+
+    return render(request, "question.html")
+
+
+@staff_member_required()
+def question_admin(request):
+    """
+    View to query for a new question the user has not answered yet
+
+    :param request:
+    :return:
+    """
+
+    return render(request, "question.html")
+
+
+@staff_member_required()
+def answers(request):
     """
     View to query for a new question the user has not answered yet
 
