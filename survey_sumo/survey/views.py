@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from survey import models, forms
+from django.contrib.auth import authenticate
 
 def main(request):
     """
@@ -25,8 +26,21 @@ def login(request):
     """
 
     if request.method == 'GET':
-
+        # Load login page
         return render(request, 'login.html', {'user_form': forms.UserForm()})
+
+    elif request.method == 'POST':
+        login_data = request.POST
+        # Authenticate user with Django's built in authentication
+        user = authenticate(username=login_data.get("username"), password=login_data.get("password"))
+
+        if user is not None:
+            return redirect('question')
+        else:
+            return render(request, 'login.html', {
+                'user_form': forms.UserForm(),
+                'error': 'Incorrect username or password'
+            })
 
 
 def register(request):
@@ -40,7 +54,7 @@ def register(request):
     if request.method == 'GET':
         # load the registration page
         user_form = forms.UserForm()
-        return render(request, 'register.html')
+        return render(request, 'register.html', {"user_form": user_form})
 
     elif request.method == 'POST':
         data = request.POST
@@ -62,3 +76,5 @@ def question(request):
     :param request:
     :return:
     """
+
+    return render(request, 'question.html')
