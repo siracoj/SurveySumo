@@ -10,7 +10,7 @@ Install XCode https://itunes.apple.com/us/app/xcode/id497799835?mt=12
 
 Install Homebrew http://brew.sh/
 
-Install mysql ` brew install mysql `
+Install mysql 5.6 ` brew install mysql@5.6 `
 
 Start mysql ` mysql.server start `
 
@@ -22,7 +22,7 @@ Install requirements `sudo pip install -r SurveySumo/requirements.txt`
 
 ### Ubuntu / Debian
 
-Install mysql ` sudo apt-get install mysql-server `
+Install mysql 5.6 ` sudo apt-get install mysql-server=5.6 `
 
 Start mysql ` mysqld --initialize ` (Dont put a password for root here)
 
@@ -36,7 +36,7 @@ Install requirements `sudo pip install -r SurveySumo/requirements.txt`
 
 ### Centos / Fedora
 
-Install mysql ` sudo yum install mysql-server `
+Install mysql ` sudo yum install mysql-server=5.6 `
 
 Start mysql ` sudo /sbin/service mysqld start `
 
