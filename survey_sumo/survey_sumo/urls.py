@@ -20,7 +20,10 @@ from django.conf.urls.static import static
 from survey import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.login),
+    url(r'^$', views.main, name='main'),
+    url(r'^admin/', admin.site.urls, name='admin'),
+    url(r'^login/', views.login, name='login'),
+    url(r'^question/', views.question, name='question'),
+    url(r'^register/', views.register, name='register'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

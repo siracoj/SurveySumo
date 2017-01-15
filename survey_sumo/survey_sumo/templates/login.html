@@ -9,6 +9,7 @@
 	<!-- Main Form -->
 	<div class="login-form-1">
 		<form id="login-form" class="text-left" action="/login/">
+      {% csrf_token %}
 			<div class="login-form-main-message"></div>
 			<div class="main-login-form">
 				<div class="login-group">
@@ -29,7 +30,7 @@
 			</div>
 			<div class="etc-login-form">
 				<p>forgot your password? <a href="#">click here</a></p>
-				<p>new user? <a href="#">create new account</a></p>
+				<p>new user? <a href="{% url 'register' %}">create new account</a></p>
 			</div>
 		</form>
 	</div>
