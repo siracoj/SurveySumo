@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        fields = ["username", "first_name", "last_name", "email", "password"]
 
     def clean(self):
         """
@@ -19,5 +19,5 @@ class UserForm(forms.ModelForm):
         :return:
         """
         clean_data = super(UserForm, self).clean()
-        if self.data.get('password') != self.data.get("password_confirm"):
+        if self.data.get("password") != self.data.get("password_confirm"):
             self.add_error("password", forms.ValidationError("Passwords do not match"))
