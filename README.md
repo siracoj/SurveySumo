@@ -53,7 +53,7 @@ Install requirements `sudo pip install -r SurveySumo/requirements.txt`
 
 Log in to mysql `mysql -u root`
 
-Create the survey db `create database survey_sumo`
+Create the survey db `create database survey_sumo;`
 
 Change Directory to survey_sumo `cd SurveySumo/survey_sumo`
 
