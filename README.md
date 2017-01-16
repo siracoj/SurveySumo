@@ -2,6 +2,8 @@
 
 Survey Sumo is a web application that allows you to create survey questions and serve them to potential users never allowing the same user to answer the same question twice.
 
+As an admin you can view the results from users on the "View Answers" page, create questions, and edit questions.
+
 ## Installation instructions
 
 ### OSX
