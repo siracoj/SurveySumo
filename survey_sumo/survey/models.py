@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from jsonfield import JSONField
 
 
 class Question(models.Model):
@@ -9,6 +10,10 @@ class Question(models.Model):
     Model to hold all questions to be answered by users
     """
     question = models.CharField(max_length=1000)
+    choices = JSONField()
+
+    def __str__(self):
+        return self.question
 
 
 class Answer(models.Model):
@@ -20,6 +25,9 @@ class Answer(models.Model):
     user = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     answer = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.answer
 
 
 

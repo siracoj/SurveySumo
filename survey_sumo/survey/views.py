@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import Http404, redirect, render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from survey import models, forms
@@ -54,6 +54,7 @@ def login_user(request):
                 "error": "Incorrect username or password"
             })
 
+    return Http404()
 
 def register(request):
     """
@@ -90,6 +91,8 @@ def register(request):
         else:
             return render(request, "register.html", {"errors": user_form.errors})
 
+    return Http404()
+
 
 @login_required(login_url='login')
 def question(request):
@@ -99,8 +102,10 @@ def question(request):
     :param request:
     :return:
     """
+    if request.method == "GET":
+        return render(request, "question.html")
 
-    return render(request, "question.html")
+    return Http404()
 
 
 @staff_member_required()
@@ -112,19 +117,28 @@ def add_question(request):
     :return:
     """
 
-    return render(request, "question.html")
+    if request.method == "GET":
+        return render(request, "survey_admin/question_add.html")
 
+    elif request.method == "POST":
+        question_forms = forms.QuestionForm(request.POST)
 
-@staff_member_required()
-def question_admin(request):
-    """
-    View to query for a new question the user has not answered yet
+        print request.POST
 
-    :param request:
-    :return:
-    """
+        if question_forms.is_valid():
+            data = question_forms.cleaned_data
 
-    return render(request, "question.html")
+            question = models.Question()
+            question.question = data.get("question")
+            question.choices = request.POST.getlist("choice")
+
+            question.save()
+
+            return render(request, "survey_admin/question_add.html", {"message": "Question Saved!"})
+        else:
+            return render(request, "survey_admin/question_add.html", {"message": question_forms.errors})
+
+    return Http404()
 
 
 @staff_member_required()
@@ -135,5 +149,5 @@ def answers(request):
     :param request:
     :return:
     """
-
-    return render(request, "question.html")
+    if request.method == "GET":
+        return render(request, "survey_admin/answer_view.html")

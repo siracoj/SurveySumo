@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="{% static 'style/main.css' %}">
   <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+  <script src="{% static 'javascript/app.js' %}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
   <body>
@@ -35,7 +36,7 @@
       <div class="text-right">
         <a class="button" href="{% url 'question_add' %}">Create a Question</a>
         <br>
-        <a class="button" href="{% url 'question_admin' %}">View Questions</a>
+        <a class="button" href="/admin/survey/question/">View Questions</a>
         <br>
         <a class="button" href="{% url 'answers' %}">View Answers</a>
         <br>
