@@ -143,16 +143,14 @@ def add_question(request):
         return render(request, "survey_admin/question_add.html")
 
     elif request.method == "POST":
+
         question_forms = forms.QuestionForm(request.POST)
-
-        print request.POST
-
         if question_forms.is_valid():
             data = question_forms.cleaned_data
 
             question = models.Question()
             question.question = data.get("question")
-            question.choices = request.POST.getlist("choice")
+            question.choices = data.get("choices")
 
             question.save()
 

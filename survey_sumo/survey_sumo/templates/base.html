@@ -30,6 +30,8 @@
       {% if request.user.is_authenticated %}
       <div class="text-left col-md-6">
         <a class="button" href="{% url 'login' %}">Logout</a>
+        <br>
+        <a class="button" href="{% url 'main' %}">Home</a>
       </div>
     {% endif %}
     {% if request.user.is_staff %}

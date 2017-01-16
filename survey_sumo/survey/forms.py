@@ -37,6 +37,15 @@ class QuestionForm(forms.ModelForm):
 
         :return:
         """
-        clean_data = super(QuestionForm, self).clean()
-        if len(self.data.getlist("choice")) < 1:
-            self.add_error("Choices", forms.ValidationError("Questions need at least 1 choice"))
+        cleaned_data = super(QuestionForm, self).clean()
+
+        choices = []
+        for choice in self.data.getlist("choice"):
+            if choice and choice != "":
+                choices.append(choice)
+
+        if len(choices) < 1:
+            self.add_error("question", forms.ValidationError("Questions need at least 1 choice"))
+
+        self.cleaned_data['choices'] = choices
+
