@@ -33,17 +33,19 @@ class QuestionForm(forms.ModelForm):
 
     def clean(self):
         """
-        Custom clean function to check if passwords match
+        Custom clean function to clean up empty choices and make sure there is at least 1 choice
 
         :return:
         """
         cleaned_data = super(QuestionForm, self).clean()
 
+        # Choices are removed here if blank
         choices = []
         for choice in self.data.getlist("choice"):
             if choice and choice != "":
                 choices.append(choice)
 
+        # Must have at least one choice
         if len(choices) < 1:
             self.add_error("question", forms.ValidationError("Questions need at least 1 choice"))
 

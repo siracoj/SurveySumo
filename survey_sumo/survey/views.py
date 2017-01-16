@@ -121,6 +121,11 @@ def question(request):
         answer = models.Answer()
         answer.question = models.Question.objects.get(id=request.POST.get("question"))
         answer.user = request.user
+
+        # Must Select an answer
+        if request.POST.get("choice") is None:
+            return render(request, "question.html", {"question": answer.question})
+
         answer.answer = request.POST.get("choice")
 
         answer.save()
@@ -145,6 +150,8 @@ def add_question(request):
     elif request.method == "POST":
 
         question_forms = forms.QuestionForm(request.POST)
+
+        # Saving and validating the question
         if question_forms.is_valid():
             data = question_forms.cleaned_data
 
@@ -164,10 +171,12 @@ def add_question(request):
 @staff_member_required()
 def answers(request):
     """
-    View to query for a new question the user has not answered yet
+    View Display answers in pie charts
 
     :param request:
     :return:
     """
     if request.method == "GET":
         return render(request, "survey_admin/answer_view.html", {"questions": models.Question.objects.all()})
+
+    return Http404()
