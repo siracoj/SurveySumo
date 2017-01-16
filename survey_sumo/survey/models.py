@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from jsonfield import JSONField
+from django.db.models.aggregates import Count
+from random import randint
 
 
 class Question(models.Model):

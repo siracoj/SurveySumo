@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from survey import models, forms
 from django.contrib.auth import authenticate, logout, login
+import random
 
 
 def main(request):
@@ -56,6 +57,7 @@ def login_user(request):
 
     return Http404()
 
+
 def register(request):
     """
     View for loading the registration page and adding a registered user
@@ -103,7 +105,13 @@ def question(request):
     :return:
     """
     if request.method == "GET":
-        return render(request, "question.html")
+        # Gets a set of all questions already answered
+        answered_questions = set([a.question.id for a in models.Answer.objects.filter(user=request.user)])
+
+        # Gets a question from a list of already answered questions
+        question = random.choice(models.Question.objects.exclude(id__in=answered_questions))
+
+        return render(request, "question.html", {"question": question})
 
     return Http404()
 
