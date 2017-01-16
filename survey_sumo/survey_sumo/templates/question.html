@@ -4,16 +4,20 @@
 
 
   <div class="text-center" style="padding:50px 0">
+
+    {% if question %}
     <div class="logo">{{ question.question }}</div>
     <!-- Main Form -->
     <div class="login-form-1">
-      <form id="forgot-password-form" class="text-left">
+      <form id="question-form" class="text-left" action="{% url "question" %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="question" value="{{ question.id }}">
         <div class="login-form-main-message"></div>
         <div class="main-login-form">
           <div class="login-group">
             <div class="form-group login-group-checkbox">
               {% for choice in question.choices %}
-                <input type="radio" class="" name="choice" id="{{ choice }}">
+                <input type="radio" class="" name="choice" value="{{ choice }}" id="{{ choice }}">
                 <label for="{{ choice }}">{{ choice }}</label>
                 <br>
               {% endfor %}
@@ -23,6 +27,9 @@
         </div>
       </form>
     </div>
+    {% else %}
+    <div class="logo">All questions answered, please come back later</div>
+    {% endif %}
     <!-- end:Main Form -->
   </div>
 

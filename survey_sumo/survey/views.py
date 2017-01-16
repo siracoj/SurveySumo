@@ -109,9 +109,23 @@ def question(request):
         answered_questions = set([a.question.id for a in models.Answer.objects.filter(user=request.user)])
 
         # Gets a question from a list of already answered questions
-        question = random.choice(models.Question.objects.exclude(id__in=answered_questions))
+        chosen_question = None
+        unanswered_questions = models.Question.objects.exclude(id__in=answered_questions)
+        if len(unanswered_questions) > 0:
+            chosen_question = random.choice(unanswered_questions)
 
-        return render(request, "question.html", {"question": question})
+        return render(request, "question.html", {"question": chosen_question})
+
+    elif request.method == "POST":
+        # save answer
+        answer = models.Answer()
+        answer.question = models.Question.objects.get(id=request.POST.get("question"))
+        answer.user = request.user
+        answer.answer = request.POST.get("choice")
+
+        answer.save()
+
+        return redirect("question")
 
     return Http404()
 
