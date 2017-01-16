@@ -172,4 +172,4 @@ def answers(request):
     :return:
     """
     if request.method == "GET":
-        return render(request, "survey_admin/answer_view.html")
+        return render(request, "survey_admin/answer_view.html", {"questions": models.Question.objects.all()})
